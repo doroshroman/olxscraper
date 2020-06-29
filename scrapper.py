@@ -1,16 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 from pprint import pprint
-from collections import namedtuple
-import time
+from typing import NamedTuple, Set
 
-Advert = namedtuple('Advert', ['title', 'price', 'link'])
-OLX_URL = "https://olx.ua"
+Advert = NamedTuple('Advert', [('title', str), ('price', str), ('link', str)])
+OLX_URL: str = "https://olx.ua"
 
-def search_by_keyword(keyword, base_url=OLX_URL, pages=1):
-    adverts = set()
-    parsed_keyword = '-'.join(keyword.split())
-    search_query = f'{base_url}/list/q-{parsed_keyword}/'
+def search_by_keyword(keyword: str, base_url: str=OLX_URL, pages: int=1) -> Set[Advert]:
+    adverts: Set[Advert] = set()
+    parsed_keyword: str = '-'.join(keyword.split())
+    search_query: str = f'{base_url}/list/q-{parsed_keyword}/'
 
     for i in range(1, pages + 1):
         resp = requests.get(f'{search_query}?page={i}')
@@ -33,4 +32,4 @@ def search_by_keyword(keyword, base_url=OLX_URL, pages=1):
     return adverts
 
 if __name__ == '__main__':
-    offers = search_by_keyword("iphone 5", OLX_URL, pages=1)
+    pprint(search_by_keyword("iphone 5", OLX_URL, pages=1))

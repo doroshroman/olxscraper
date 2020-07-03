@@ -1,1 +1,1 @@
-worker: python3 session.py
+web: gunicorn session:server

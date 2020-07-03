@@ -2,7 +2,7 @@ import telebot
 import scrapper
 from pprint import pprint
 import os
-from flask import Flask
+from flask import Flask, request
 
 APP_NAME = 'olxxxer'
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
